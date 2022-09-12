@@ -116,5 +116,16 @@ function love.touchpressed(id, x, y)
     end 
 end
 
+--[[
+% chromatic_transposition
+
+A description of how the code works
+
+@ first (string) Text of the first parameter
+@ [optional] (any) Optional parameters to be called whatever
+
+: (number) Number of whatever is done or nil if an error occurred
+--]]
+
 function love.touchreleased(id, x, y) 
 end
