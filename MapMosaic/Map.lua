@@ -17,29 +17,13 @@ local function _NULL_() end
 
 is in charge of managing functions that are related to the map, and the blocks
 
- Map use for tilemap 
- ```lua
-   {
-    {0,0,0},
-    {0,0,0},
-    {0,0,0},
-   }
- ```
- 
- on build map, map associates a number with an id in the blockList and from this creates the block
-
 @ first (table) simple tilemap
 
 @ [optional] (BlockList) map use global Block list but can set own block list
 
-@ [optional] (table) set callbacks 
-
-@ event callback (table) set callbacks 
+@ [optional] (table) set callbacks event
 
 : (Map) return self
-
-
-
 ]]
 
 
@@ -90,17 +74,48 @@ function Map:new(Map, BlockList, events)
   --If you want temporary values that when the map is closed they are in the original state, in the unload event restart the values
 end
 
+
+--[[
+% Map:setEventOnLoad(function)
+
+@ first (function) set callback for event onLoad 
+
+]]
+
 function Map:setEventOnLoad(f)
   self.events.onLoad = f
 end
+
+--[[
+% Map:setEventPreLoad(function)
+
+@ first (function) set callback for event preLoad 
+
+]]
 
 function Map:setEventPreLoad(f)
   self.events.preLoad = f
 end
 
-function Map:setEventUnLoad(f)
-  self.events.unLoad = f
+--[[
+% Map:setEventOnLoad(function)
+
+@ first (function) set callback for event onLoad 
+
+]]
+
+
+function Map:setEventOnLoad(f)
+  self.events.onLoad = f
 end
+
+--[[
+% Map:setEventInit(function)
+
+@ first (function) set callback for event Init 
+
+]]
+
 
 function Map:setEventInit(f)
   self.events.Init = f
