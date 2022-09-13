@@ -349,7 +349,9 @@ end
 ```
 
 
-@ obj (init/table) is value block, can be number id or table has {id, data = {}}
+@ obj (init) is value id block, can be number id
+
+@ obj (table) can be table has {id, data = {}}
 
 @ tx (init) tile position x
 
