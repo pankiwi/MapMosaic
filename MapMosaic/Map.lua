@@ -286,7 +286,7 @@ end
 
 @ y (float) world position y
 
-: (init, init) return tx, ty
+: (init) return tx, ty
 
 
 ]]
@@ -309,7 +309,7 @@ end
 
 @ ty (init) tile position y
 
-: (float, float) return x, y
+: (float) return x, y
 
 
 ]]
