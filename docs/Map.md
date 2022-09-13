@@ -1,13 +1,17 @@
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
+- [new](#new)
+- [setEventOnLoad](#setEventOnLoad)
+- [setEventPreLoad](#setEventPreLoad)
+- [setEventOnLoad](#setEventOnLoad)
+- [setEventInit](#setEventInit)
 
-## Map
+## new
 
 ```lua
-Map(tilemap, BlockList, events)
+new(tilemap, BlockList, events)
+```
+
+```lua
+ Map(tilemap, BlockList, events)
 ```
 
 is in charge of managing functions that are related to the map, and the blocks
@@ -28,32 +32,40 @@ is in charge of managing functions that are related to the map, and the blocks
 | --- | --- |
 | `Map` | return self |
 
-## Map
+## setEventOnLoad
 
 ```lua
-Map:setEventOnLoad(function)
+setEventOnLoad(function)
+```
+
+set callback event
+
+```lua
+ Map:setEventOnLoad(f)
 ```
 
 | Input | Type | Description |
 | --- | --- | --- |
-| `first` | `function` | set callback for event onLoad  |
+| `f` | `function` | set callback for event onLoad  |
 
 
-## Map
+## setEventPreLoad
 
 ```lua
-Map:setEventPreLoad(function)
+setEventPreLoad(function)
 ```
+
+apply
 
 | Input | Type | Description |
 | --- | --- | --- |
 | `first` | `function` | set callback for event preLoad  |
 
 
-## Map
+## setEventOnLoad
 
 ```lua
-Map:setEventOnLoad(function)
+setEventOnLoad(function)
 ```
 
 | Input | Type | Description |
@@ -61,10 +73,10 @@ Map:setEventOnLoad(function)
 | `first` | `function` | set callback for event onLoad  |
 
 
-## Map
+## setEventInit
 
 ```lua
-Map:setEventInit(function)
+setEventInit(function)
 ```
 
 | Input | Type | Description |
