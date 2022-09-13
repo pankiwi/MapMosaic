@@ -13,7 +13,11 @@ local function _NULL_() end
 
 
 --[[
-% Map(tilemap, BlockList, events)
+% new(tilemap, BlockList, events)
+
+```lua
+ Map(tilemap, BlockList, events)
+```
 
 is in charge of managing functions that are related to the map, and the blocks
 
@@ -76,9 +80,15 @@ end
 
 
 --[[
-% Map:setEventOnLoad(function)
+% setEventOnLoad(function)
 
-@ first (function) set callback for event onLoad 
+set callback event
+
+```lua
+ Map:setEventOnLoad(f)
+```
+
+@ f (function) set callback for event onLoad 
 
 ]]
 
@@ -87,7 +97,9 @@ function Map:setEventOnLoad(f)
 end
 
 --[[
-% Map:setEventPreLoad(function)
+% setEventPreLoad(function)
+
+apply
 
 @ first (function) set callback for event preLoad 
 
@@ -98,7 +110,7 @@ function Map:setEventPreLoad(f)
 end
 
 --[[
-% Map:setEventOnLoad(function)
+% setEventOnLoad(function)
 
 @ first (function) set callback for event onLoad 
 
@@ -110,7 +122,7 @@ function Map:setEventOnLoad(f)
 end
 
 --[[
-% Map:setEventInit(function)
+% setEventInit(function)
 
 @ first (function) set callback for event Init 
 
