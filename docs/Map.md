@@ -7,16 +7,16 @@
 - [setMapBySize](#setMapBySize)
 - [generateMap](#generateMap)
 - [getIdBlockGen](#getIdBlockGen)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
-- [Map](#Map)
+- [toTile](#toTile)
+- [tileTo](#tileTo)
+- [setBlock](#setBlock)
+- [getBlock](#getBlock)
+- [removeBlock](#removeBlock)
+- [load](#load)
+- [update](#update)
+- [draw](#draw)
+- [close](#close)
+- [reset](#reset)
 
 ## new
 
@@ -201,10 +201,10 @@ the output must be an int value, from that value a block with the same id is ass
 
 
 
-## Map
+## toTile
 
 ```lua
-Map:toTile(x, y)
+toTile(x, y)
 ```
 
  World coords to tile coords
@@ -228,10 +228,10 @@ Map:toTile(x, y)
 
 
 
-## Map
+## tileTo
 
 ```lua
-Map:tileTo(tx, ty)
+tileTo(tx, ty)
 ```
 
  tile coords to world coords
@@ -255,10 +255,10 @@ Map:tileTo(tx, ty)
 
 
 
-## Map
+## setBlock
 
 ```lua
-Map:setBlock(obj, tx, ty, forzePlace)
+setBlock(obj, tx, ty, forzePlace)
 ```
 
  Set block in map, this function needs the maptile to be already loaded
@@ -289,10 +289,10 @@ Map:setBlock(obj, tx, ty, forzePlace)
 | `forzePlace` (optional) | `bool` | if is true, place block even when the space is already occupied |
 
 
-## Map
+## getBlock
 
 ```lua
-Map:getBlock(tx, ty)
+getBlock(tx, ty)
 ```
 
  to get blocks on the map, this function needs the maptile to be already loaded
@@ -313,10 +313,10 @@ Map:getBlock(tx, ty)
 | --- | --- |
 | `Block` | return Block object |
 
-## Map
+## removeBlock
 
 ```lua
-Map:removeBlock(tx, ty)
+removeBlock(tx, ty)
 ```
 
  remove blocks on the map, this function needs the maptile to be already loaded
@@ -333,10 +333,10 @@ Map:removeBlock(tx, ty)
 | --- | --- | --- |
 | `ty` | `init` | tile position y |
 
-## Map
+## load
 
 ```lua
-Map:load(x, y)
+load(x, y)
 ```
 
  load the map to use this
@@ -353,10 +353,10 @@ Map:load(x, y)
 | --- | --- | --- |
 | `y` | `init` | world position y |
 
-## Map
+## update
 
 ```lua
-Map:update(dt)
+update(dt)
 ```
 
   Update Map
@@ -369,10 +369,10 @@ Map:update(dt)
 | --- | --- | --- |
 | `dt` | `deltaTime` | TODO |
 
-## Map
+## draw
 
 ```lua
-Map:draw()
+draw()
 ```
 
   draw Map
@@ -381,10 +381,10 @@ Map:draw()
  Map:draw()
 ```
 
-## Map
+## close
 
 ```lua
-Map:close()
+close()
 ```
 
   close map, destroy all object are in map
@@ -393,10 +393,10 @@ Map:close()
  Map:close()
 ```
 
-## Map
+## reset
 
 ```lua
-Map:reset()
+reset()
 ```
 
   it is to reset the map
