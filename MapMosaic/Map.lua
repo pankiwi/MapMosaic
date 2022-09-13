@@ -15,17 +15,17 @@ local function _NULL_() end
 --[[
 % new(tilemap, BlockList, events)
 
+is in charge of managing functions that are related to the map, and the blocks
+
 ```lua
  Map(tilemap, BlockList, events)
 ```
 
-is in charge of managing functions that are related to the map, and the blocks
+@ Map (table) simple tilemap
 
-@ first (table) simple tilemap
+@ [BlockList] (BlockList) map use global Block list but can set own block list
 
-@ [optional] (BlockList) map use global Block list but can set own block list
-
-@ [optional] (table) set callbacks event
+@ [events] (table) set callbacks event
 
 : (Map) return self
 ]]
@@ -99,9 +99,13 @@ end
 --[[
 % setEventPreLoad(function)
 
-apply
+set callback event
 
-@ first (function) set callback for event preLoad 
+```lua
+ Map:setEventPreLoad(f)
+```
+
+@ f (function) set callback for event preLoad 
 
 ]]
 
@@ -110,21 +114,32 @@ function Map:setEventPreLoad(f)
 end
 
 --[[
-% setEventOnLoad(function)
+% setEventUnLoad(function)
 
-@ first (function) set callback for event onLoad 
+set callback event
+
+```lua
+ Map:setEventUnLoad(f)
+```
+
+@ f (function) set callback for event unLoad 
 
 ]]
 
-
-function Map:setEventOnLoad(f)
-  self.events.onLoad = f
+function Map:setEventUnLoad(f)
+  self.events.unLoad = f
 end
 
 --[[
 % setEventInit(function)
 
-@ first (function) set callback for event Init 
+set callback event
+
+```lua
+ Map:setEventInit(f)
+```
+
+@ f (function) set callback for event Init 
 
 ]]
 
@@ -134,12 +149,43 @@ function Map:setEventInit(f)
 end
 
 
---settings
+--[[
+% setSetting(s)
+
+set settings tilemap, settings is a table has values need map for build tilemap
+
+```lua
+setting = {
+  tileWidth = 16,
+  tileHeight = 16,
+  omitZero = false --if is zero id, omit create block
+}
+```
+
+```lua  
+ Map:setSetting(s)
+```
+
+@ s (table) set setting of map
+]]
+
 function Map:setSetting(s)
   self.settings = deepCopy(MapMosaic.settings,s)
 end
 
---usefull for generate by perling noise
+--[[
+% setMapBySize(width, height)
+
+create map by width and height,setMapBySize to generate the map values use the function ```lua Map:getIdBlockGen() ```, Useful for procedural generation or perlin noise
+
+```lua
+ Map:setMapBySize(width, height)
+```
+
+@ width (init) width of the map
+@ height (init) height of the map
+]]
+
 function Map:setMapBySize(width, height)
   self.map = {}
   
@@ -157,6 +203,19 @@ function Map:setMapBySize(width, height)
   self.height = th * self.settings.tileHeight
 end
 
+--[[
+% generateMap(width, height)
+
+a function that has the objective of restarting the generation of the map, without having to create a new map, it only changes the values of the original map,generateMap to generate the map values use the function ```lua Map:getIdBlockGen() ```
+
+```lua
+ Map:generateMap(width, height)
+```
+
+@ [width] (init) width of the map
+@ [height] (init) height of the map
+]]
+
 function Map:generateMap(width, height)
   if not self.tileWidth or not self.tileHeight then self:setMapBySize(width or 1, height or 1) return end
   
@@ -167,14 +226,32 @@ function Map:generateMap(width, height)
   end
 end
 
-function Map:reset()
-  self:close()
-  self:load()
-end
+
+--[[
+% getIdBlockGen(tx, ty)
+
+is a function that is used to generate the map tile in the functions generateMap, setMapBySize.replace the function with one that is suitable for the generation of tiles you are looking for
+
+the output must be an int value, from that value a block with the same id is associated, if the id is not valid, it is replaced by 0
+
+```lua
+ Map:getIdBlockGen( tx, ty)
+```
+
+
+@ tx (init) tile position x
+
+@ ty (init) tile position y
+
+: (init) return id block
+
+
+]]
 
 function Map:getIdBlockGen( tx, ty)
  return 0
 end
+
 
 function Map:getBounsMap()
   local widths = {}
@@ -195,9 +272,47 @@ function Map:getIndex(tx, ty)
   return (ty * self.tileWidth)  + tx
 end
 
+--[[
+% Map:toTile(x, y)
+
+ World coords to tile coords
+
+```lua
+ Map:toTile(x, y)
+```
+
+
+@ x (float) world position x
+
+@ y (float) world position y
+
+: (init, init) return tx, ty
+
+
+]]
+
 function Map:toTile(x, y)
   return math.floor(((x - self.x)/self.settings.tileWidth )), math.floor((y - self.y)/self.settings.tileHeight )
 end
+
+--[[
+% Map:tileTo(tx, ty)
+
+ tile coords to world coords
+
+```lua
+ Map:tileTo(tx, ty)
+```
+
+
+@ tx (init) tile position x
+
+@ ty (init) tile position y
+
+: (float, float) return x, y
+
+
+]]
 
 function Map:tileTo(tx, ty)
   return self.x + tx  * self.settings.tileWidth,self.y + ty * self.settings.tileHeight 
@@ -223,6 +338,27 @@ function Map:addBlock(obj, tx, ty)
   end
 end
 
+
+--[[
+% Map:setBlock(obj, tx, ty, forzePlace)
+
+ Set block in map, this function needs the maptile to be already loaded
+
+```lua
+ Map:setBlock(obj, tx, ty, forzePlace)
+```
+
+
+@ obj (init or table) is value block, can be number id or table has {id, data = {}}
+
+@ tx (init) tile position x
+
+@ ty (init) tile position y
+
+@ [forzePlace] (bool) if is true, place block even when the space is already occupied
+
+]]
+
 function Map:setBlock(obj, tx, ty, forzePlace)
   if tx < 0 or tx > self.tileWidth - 1 or ty < 0 or ty > self.tileHeight - 1 then return  end
   
@@ -241,6 +377,21 @@ function Map:setBlock(obj, tx, ty, forzePlace)
   self.blocks[index] = b
 end
 
+--[[
+% Map:getBlock(tx, ty)
+
+ to get blocks on the map, this function needs the maptile to be already loaded
+
+```lua
+ Map:getBlock(tx, ty)
+```
+
+@ tx (init) tile position x
+
+@ ty (init) tile position y
+
+: (Block) return Block object
+]]
 
 function Map:getBlock(tx, ty)
  if tx < 0 or tx > self.tileWidth - 1 or ty < 0 or ty > self.tileHeight - 1 then return nil end
@@ -250,6 +401,20 @@ function Map:getBlock(tx, ty)
  
   return b
 end
+
+--[[
+% Map:removeBlock(tx, ty)
+
+ remove blocks on the map, this function needs the maptile to be already loaded
+
+```lua
+ Map:removeBlock(tx, ty)
+```
+
+@ tx (init) tile position x
+
+@ ty (init) tile position y
+]]
 
 function Map:removeBlock(tx, ty)
   if tx < 0 or tx > self.tileWidth - 1 or ty < 0 or ty > self.tileHeight - 1 then return  end
@@ -263,9 +428,21 @@ function Map:removeBlock(tx, ty)
     self.blocks[index]:putOff()
     if not self.settings.omitZero then self.blocks[index] = b else self.blocks[index] = nil end
   end
-  
-  
 end
+
+--[[
+% Map:load(x, y)
+
+ load the map to use this
+
+```lua
+ Map:load(x, y)
+```
+
+@ x (init) world position x
+
+@ y (init) world position y
+]]
 
 function Map:load(x, y)
   self.x , self.y = x or self.x,  y or self.y
@@ -290,6 +467,18 @@ function Map:load(x, y)
   self.events.onLoad(self)
 end
 
+--[[
+% Map:update(dt)
+
+  Update Map
+
+```lua
+ Map:update(dt)
+```
+
+@ dt (deltaTime) TODO
+]]
+
 function Map:update(dt)
   for i,v in pairs(self.blocks) do
     if v.is_updated then v:update(dt) end
@@ -303,6 +492,16 @@ function Map:update(dt)
   end
   
 end
+
+--[[
+% Map:draw()
+
+  draw Map
+
+```lua
+ Map:draw()
+```
+]]
 
 function Map:draw()
   for i,v in pairs(self.blocks) do
@@ -327,7 +526,16 @@ function Map:draw()
   end
 end
 
---close map
+--[[
+% Map:close()
+
+  close map, destroy all object are in map
+
+```lua
+ Map:close()
+```
+]]
+
 function Map:close()
   self.events.unLoad(self)
  
@@ -339,6 +547,25 @@ function Map:close()
     table.remove(self.blocks, i)
   end
 end
+
+--[[
+% Map:reset()
+
+  it is to reset the map
+
+```lua
+ Map:reset()
+```
+]]
+
+function Map:reset()
+  self:close()
+  self:load()
+end
+
+
+
+--Beta functions, not are finish--
 
 function Map:parseBlocks()
   local map = {}

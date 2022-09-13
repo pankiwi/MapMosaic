@@ -1,6 +1,11 @@
 current_module = (...):gsub("%.init$", "")
 current_folder = current_module:gsub("%.", "/")
 
+--[[
+  MapMosaic v0.1 by pankiwi
+]]
+
+
 function deepCopy(b, a)
 for k,v in pairs(a) do
     if not b[k] then b[k] = v end
@@ -12,8 +17,7 @@ end
 
 MapMosaic = {}
 
-MapMosaic.debug = true
-
+MapMosaic.debug = false
 MapMosaic.debug_showIdBlock = false
 
 MapMosaic.settings = {
