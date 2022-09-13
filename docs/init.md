@@ -1,0 +1,1 @@
+  MapMosaic v0.1 by pankiwi
