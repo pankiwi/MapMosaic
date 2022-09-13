@@ -273,7 +273,7 @@ function Map:getIndex(tx, ty)
 end
 
 --[[
-% Map:toTile(x, y)
+% toTile(x, y)
 
  World coords to tile coords
 
@@ -296,7 +296,7 @@ function Map:toTile(x, y)
 end
 
 --[[
-% Map:tileTo(tx, ty)
+% tileTo(tx, ty)
 
  tile coords to world coords
 
@@ -340,7 +340,7 @@ end
 
 
 --[[
-% Map:setBlock(obj, tx, ty, forzePlace)
+% setBlock(obj, tx, ty, forzePlace)
 
  Set block in map, this function needs the maptile to be already loaded
 
@@ -380,7 +380,7 @@ function Map:setBlock(obj, tx, ty, forzePlace)
 end
 
 --[[
-% Map:getBlock(tx, ty)
+% getBlock(tx, ty)
 
  to get blocks on the map, this function needs the maptile to be already loaded
 
@@ -405,7 +405,7 @@ function Map:getBlock(tx, ty)
 end
 
 --[[
-% Map:removeBlock(tx, ty)
+% removeBlock(tx, ty)
 
  remove blocks on the map, this function needs the maptile to be already loaded
 
@@ -433,7 +433,7 @@ function Map:removeBlock(tx, ty)
 end
 
 --[[
-% Map:load(x, y)
+% load(x, y)
 
  load the map to use this
 
@@ -470,7 +470,7 @@ function Map:load(x, y)
 end
 
 --[[
-% Map:update(dt)
+% update(dt)
 
   Update Map
 
@@ -496,7 +496,7 @@ function Map:update(dt)
 end
 
 --[[
-% Map:draw()
+% draw()
 
   draw Map
 
@@ -529,7 +529,7 @@ function Map:draw()
 end
 
 --[[
-% Map:close()
+% close()
 
   close map, destroy all object are in map
 
@@ -551,7 +551,7 @@ function Map:close()
 end
 
 --[[
-% Map:reset()
+% reset()
 
   it is to reset the map
 
